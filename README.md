@@ -4,6 +4,15 @@ install the dependencies with [ pip install -r requirements.txt ]
 
 cd backend
 
+create a .env file in the main directory
+add the following; 
+
+"""
+FASTAPI_URL=http://127.0.0.1:8000
+API_URL=http://127.0.0.1:8000
+GEMINI_API_KEY=your_api_key
+"""
+
 
 1 : if you are using ubuntu, activate the venv environment by (source venv/bin/activate)
     if using windows, create a venv (python -m venv myenv) and activate (myenv/Scripts/activate)
