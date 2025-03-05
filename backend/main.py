@@ -87,14 +87,33 @@ app = FastAPI()
 class Message(BaseModel):
     text: str
 
+# @app.post("/reply")
+# async def reply_to_message(message: Message):
+#     try:
+#         # Generate AI response using Gemini
+#         model = genai.GenerativeModel("gemini-1.5-flash")
+#         response = model.generate_content(message.text)
+
+#         return {"reply": response.text}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/reply")
 async def reply_to_message(message: Message):
     try:
-        # Generate AI response using Gemini
+        # Create a domain-specific prompt
+        domain_prompt = (
+            "You are an AI chatbot specialized in emotional well-being. "
+            "Please provide supportive and empathetic advice. "
+            "Also, for additional resources, remind the user to visit https://emo-well.vercel.app/ . "
+            "User query: "
+        )
+        prompt_text = domain_prompt + message.text
+
+        # Generate AI response using Gemini with the modified prompt
         model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(message.text)
+        response = model.generate_content(prompt_text)
 
         return {"reply": response.text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
